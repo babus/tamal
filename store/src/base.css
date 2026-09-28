@@ -1,0 +1,10 @@
+:root { --bg: #f7f3ec; --panel: #fff; --ink: #1d1c1a; --muted: #6b6860; --line: #e2dcd0; --accent: #b4482c; --accent-soft: #f3e2da; }
+* { box-sizing: border-box; margin: 0; }
+html, body { width: var(--w); height: var(--h); overflow: hidden; }
+body { background: var(--bg); color: var(--ink); font: 16px/1.5 -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif; }
+.ml { font-family: "Malayalam Sangam MN", "Noto Sans Malayalam", sans-serif; }
+.ta { font-family: "Tamil Sangam MN", "Noto Sans Tamil", sans-serif; }
+.brand { display: flex; align-items: center; gap: 14px; }
+.brand img { border-radius: 22%; }
+.brand b { font-size: 30px; letter-spacing: -.01em; }
+.arrow { color: var(--accent); font-weight: 600; }

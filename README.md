@@ -51,6 +51,17 @@ make test     # or: npm test
 make zip      # runs the tests, then writes dist/tamal-<version>.zip for the Chrome Web Store
 ```
 
+## Chrome Web Store
+
+`store/` holds everything for the store listing:
+- `listing.md` has the name, summary, descriptions (English and Tamil) and privacy-tab answers.
+- `privacy.md` is the privacy policy, published at
+  https://gist.github.com/babus/1100d37cd6fd2b9c5eca86edf1358f37.
+- `make store` renders the screenshots and promo tiles from `store/src/*.html` with headless
+  Chrome. They use the real converter, so re-run it after changing `tamal.js`.
+
+The extension's name and summary are localized in `extension/_locales/` (English and Tamil).
+
 ## Releasing
 
 CI (`.github/workflows/ci.yml`) runs the tests and builds the zip on every push and pull

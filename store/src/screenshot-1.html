@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html data-size="1280x800">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="base.css">
+<style>
+  :root { --w: 1280px; --h: 800px; }
+  body { display: grid; grid-template-columns: 1fr 520px; align-items: center; gap: 56px; padding: 0 80px; }
+  h1 { font-size: 54px; line-height: 1.1; letter-spacing: -.02em; margin: 28px 0 18px; }
+  h1 em { font-style: normal; color: var(--accent); }
+  p.lede { font-size: 21px; color: var(--muted); max-width: 520px; }
+  ul { list-style: none; padding: 0; margin-top: 30px; display: grid; gap: 12px; font-size: 18px; }
+  li::before { content: "✓"; color: var(--accent); font-weight: 700; margin-right: 10px; }
+  .popup { background: var(--bg); border: 1px solid var(--line); border-radius: 14px; padding: 16px; box-shadow: 0 24px 60px rgba(60, 40, 20, .18); }
+  .bar { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+  .btn { font-size: 14px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .box { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; font-size: 19px; line-height: 1.7; min-height: 150px; margin-bottom: 10px; white-space: pre-wrap; }
+  .label { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 4px; }
+</style>
+</head>
+<body>
+  <div>
+    <div class="brand"><img src="../../extension/icons/128.png" width="56" height="56" alt=""><b>Tamal</b></div>
+    <h1>Read Malayalam in <em>Tamil letters</em></h1>
+    <p class="lede">Paste Malayalam and read it in Tamil script as you type. The words stay Malayalam; only the letters change.</p>
+    <ul>
+      <li>Works offline, right in your browser</li>
+      <li>Convert a selection or a whole page</li>
+      <li>No tracking. Nothing leaves your device</li>
+    </ul>
+  </div>
+  <div class="popup">
+    <div class="bar"><span class="btn primary">Convert this page</span></div>
+    <div class="label">Malayalam</div>
+    <div class="box ml" id="in">എനിക്ക് മലയാളം അറിയാം.
+നിങ്ങൾക്ക് സുഖമാണോ?
+നാളെ നമുക്ക് കടപ്പുറത്ത് പോകാം.</div>
+    <div class="label">Tamil script</div>
+    <div class="box ta" id="out"></div>
+    <div class="bar"><span class="btn">Copy output</span></div>
+  </div>
+  <script src="../../extension/tamal.js"></script>
+  <script>document.getElementById('out').textContent = Tamal.convert(document.getElementById('in').textContent);</script>
+</body>
+</html>

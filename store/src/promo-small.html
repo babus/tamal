@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html data-size="440x280">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="base.css">
+<style>
+  :root { --w: 440px; --h: 280px; }
+  body { padding: 30px 32px; display: flex; flex-direction: column; justify-content: space-between; background: var(--accent); color: #fff; }
+  .brand b { font-size: 34px; }
+  .brand img { box-shadow: 0 0 0 2px rgba(255,255,255,.5); }
+  h1 { font-size: 25px; line-height: 1.2; letter-spacing: -.01em; }
+  .ex { font-size: 18px; line-height: 1.5; opacity: .92; }
+</style>
+</head>
+<body>
+  <div class="brand"><img src="../../extension/icons/128.png" width="52" height="52" alt=""><b>Tamal</b></div>
+  <h1>Read Malayalam in Tamil letters</h1>
+  <div class="ex"><span class="ml" id="in">മലയാളം</span> → <span class="ta" id="out"></span></div>
+  <script src="../../extension/tamal.js"></script>
+  <script>document.getElementById('out').textContent = Tamal.convert(document.getElementById('in').textContent);</script>
+</body>
+</html>

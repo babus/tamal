@@ -1,0 +1,11 @@
+{
+  "extName": {
+    "message": "Tamal – Malayalam to Tamil Script"
+  },
+  "extShortName": {
+    "message": "Tamal"
+  },
+  "extDescription": {
+    "message": "Read Malayalam in Tamil letters. Convert Malayalam text, a selection or a whole web page to Tamil script. Offline and private."
+  }
+}

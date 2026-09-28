@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html data-size="1400x560">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="base.css">
+<style>
+  :root { --w: 1400px; --h: 560px; }
+  body { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 60px; padding: 0 90px; background: var(--accent); color: #fff; }
+  .brand b { font-size: 40px; }
+  .brand img { box-shadow: 0 0 0 2px rgba(255,255,255,.5); }
+  h1 { font-size: 56px; line-height: 1.08; letter-spacing: -.02em; margin: 26px 0 16px; }
+  p { font-size: 22px; opacity: .9; }
+  .card { background: var(--panel); color: var(--ink); border-radius: 18px; padding: 30px 34px; box-shadow: 0 24px 60px rgba(0,0,0,.25); }
+  .card .row { font-size: 27px; line-height: 1.6; }
+  .card .row + .row { margin-top: 6px; }
+  .card hr { border: 0; border-top: 1px solid var(--line); margin: 18px 0; }
+  .card .label { font: 600 12px/1 -apple-system, sans-serif; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: 10px; }
+</style>
+</head>
+<body>
+  <div>
+    <div class="brand"><img src="../../extension/icons/128.png" width="60" height="60" alt=""><b>Tamal</b></div>
+    <h1>Read Malayalam in Tamil letters</h1>
+    <p>Offline Chrome extension. Convert text, a selection or a whole page.</p>
+  </div>
+  <div class="card">
+    <div class="label">Malayalam</div>
+    <div class="row ml" id="in">എനിക്ക് മലയാളം അറിയാം</div>
+    <hr>
+    <div class="label">Tamil script</div>
+    <div class="row ta" id="out"></div>
+  </div>
+  <script src="../../extension/tamal.js"></script>
+  <script>document.getElementById('out').textContent = Tamal.convert(document.getElementById('in').textContent);</script>
+</body>
+</html>

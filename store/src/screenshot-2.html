@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html data-size="1280x800">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="base.css">
+<style>
+  :root { --w: 1280px; --h: 800px; }
+  body { padding: 56px 72px; }
+  header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 32px; }
+  h1 { font-size: 40px; letter-spacing: -.02em; }
+  h1 em { font-style: normal; color: var(--accent); }
+  header p { font-size: 18px; color: var(--muted); }
+  .pair { display: grid; grid-template-columns: 1fr 60px 1fr; align-items: center; }
+  .mid { text-align: center; font-size: 34px; color: var(--accent); }
+  .page { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: 0 18px 44px rgba(60, 40, 20, .12); height: 560px; position: relative; }
+  .chrome { display: flex; gap: 7px; padding: 12px 14px; border-bottom: 1px solid var(--line); background: #faf8f4; }
+  .chrome i { width: 11px; height: 11px; border-radius: 50%; background: #dcd6cb; }
+  .chrome span { margin-left: 12px; font-size: 12px; color: var(--muted); }
+  article { padding: 26px 30px; }
+  article h2 { font-size: 27px; line-height: 1.4; margin-bottom: 14px; }
+  article p { font-size: 18px; line-height: 1.8; margin-bottom: 12px; }
+  .tag { position: absolute; top: 52px; right: 16px; font-size: 12px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; background: #eee9e0; color: var(--muted); }
+  .tag.after { background: var(--accent-soft); color: var(--accent); }
+  .menu { position: absolute; left: 150px; bottom: 44px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,.16); font-size: 14px; padding: 5px 0; width: 280px; }
+  .menu div { padding: 6px 14px; color: var(--muted); }
+  .menu div.on { background: var(--accent); color: #fff; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Convert a whole page <em>in one click</em></h1>
+    <p>Right-click → Convert this page to Tamil script</p>
+  </header>
+  <div class="pair">
+    <div class="page">
+      <div class="chrome"><i></i><i></i><i></i><span>news.example</span></div>
+      <span class="tag">Before</span>
+      <article class="ml" id="src">
+        <h2>കേരളത്തിലെ മഴക്കാലം</h2>
+        <p>ജൂൺ മാസത്തിൽ കേരളത്തിൽ മഴക്കാലം തുടങ്ങുന്നു. പുഴകളും കായലുകളും നിറയുന്നു.</p>
+        <p>വയലുകളിൽ നെല്ല് പച്ചപിടിച്ചു വളരുന്നു. ഓണമാകുമ്പോഴേക്കും മഴ കുറയും.</p>
+      </article>
+      <div class="menu"><div>Back</div><div>Reload</div><div class="on">Convert this page to Tamil script</div></div>
+    </div>
+    <div class="mid">→</div>
+    <div class="page">
+      <div class="chrome"><i></i><i></i><i></i><span>news.example</span></div>
+      <span class="tag after">After</span>
+      <article class="ta" id="dst"></article>
+    </div>
+  </div>
+  <script src="../../extension/tamal.js"></script>
+  <script>
+    const dst = document.getElementById('dst');
+    dst.innerHTML = document.getElementById('src').innerHTML;
+    const walk = document.createTreeWalker(dst, NodeFilter.SHOW_TEXT);
+    while (walk.nextNode()) walk.currentNode.nodeValue = Tamal.convert(walk.currentNode.nodeValue);
+  </script>
+</body>
+</html>
