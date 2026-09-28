@@ -1,0 +1,13 @@
+{
+  "name": "tamal",
+  "version": "0.1.0",
+  "description": "Malayalam in Tamil script: convert Malayalam text to Tamil letters, offline",
+  "private": true,
+  "license": "MIT",
+  "bin": {
+    "tamal": "cli.js"
+  },
+  "scripts": {
+    "test": "node test.js"
+  }
+}

@@ -1,0 +1,50 @@
+# Every push and PR: run the tests and build the extension zip.
+# A tag like v0.1.0 also publishes a GitHub Release with that zip attached.
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check versions match
+        run: |
+          manifest=$(node -p "require('./extension/manifest.json').version")
+          package=$(node -p "require('./package.json').version")
+          [ "$manifest" = "$package" ] || { echo "manifest.json is $manifest but package.json is $package"; exit 1; }
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            [ "v$manifest" = "$GITHUB_REF_NAME" ] || { echo "Tag $GITHUB_REF_NAME does not match manifest version $manifest"; exit 1; }
+          fi
+
+      - name: Test and build
+        run: make zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tamal-extension
+          path: dist/*.zip
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: tamal-extension
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" tamal-*.zip --repo "$GITHUB_REPOSITORY" --title "Tamal $GITHUB_REF_NAME" --generate-notes

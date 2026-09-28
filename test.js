@@ -1,0 +1,34 @@
+// Run with `npm test`. Each case is Malayalam → expected Tamil-script output.
+const assert = require('assert');
+const { convert } = require('./extension/tamal');
+
+const CASES = [
+  ['എന്റെ പേര് ബാബു', 'என்றெ பேரு பாபு'], // ന്റ → ன்ற, word-final ് → ு
+  ['അവൻ വന്നു', 'அவன் வன்னு'], // chillu ൻ, ന്ന → ன்ன
+  ['അവന്‍', 'அவன்'], // old chillu spelling with ZWJ
+  ['അതു്', 'அது'], // old half-u spelling
+  ['നമസ്കാരം', 'நமஸ்காரம்'], // word-initial ന → ந
+  ['പന്ത്', 'பந்து'], // ന before ത → ந
+  ['ഇന്ത്യ', 'இந்த்ய'],
+  ['സംഗീതം', 'ஸங்கீதம்'], // anusvara before a velar → ங்
+  ['ഭാരതം', 'பாரதம்'], // voiced/aspirated stops collapse
+  ['കൃഷ്ണൻ', 'க்ருஷ்ணன்'], // vowel sign ൃ → ்ரு
+  ['ശ്രീ ശിവൻ', 'ஸ்ரீ ஶிவன்'], // Sri is written ஸ்ரீ in Tamil
+  ['ദുഃഖം', 'துஃகம்'],
+  ['പൊന്നോണം', 'பொன்னோணம்'], // two-part vowel signs
+  ['ഒരു ഓർമ്മ', 'ஒரு ஓர்ம்ம'],
+  ['൧൨൩', '123'],
+  ['Hello, കേരളം!', 'Hello, கேரளம்!'], // non-Malayalam text is left alone
+];
+
+let failed = 0;
+for (const [ml, ta] of CASES) {
+  try {
+    assert.strictEqual(convert(ml), ta);
+  } catch {
+    failed++;
+    console.error(`✗ ${ml} → ${convert(ml)} (expected ${ta})`);
+  }
+}
+console.log(`${CASES.length - failed}/${CASES.length} passed`);
+process.exitCode = failed ? 1 : 0;

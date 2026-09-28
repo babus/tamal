@@ -1,0 +1,66 @@
+# Tamal
+
+Read Malayalam in Tamil letters. Tamal keeps the Malayalam words and only changes the
+script, for readers who know Tamil script but not Malayalam script:
+
+```
+എനിക്ക് മലയാളം അറിയാം  →  எனிக்கு மலயாளம் அறியாம்
+```
+
+Everything runs locally. There is no server, no network access and no data collection.
+
+## Chrome extension
+
+`extension/` is an unpacked MV3 extension. To install: `chrome://extensions` → Developer
+mode → **Load unpacked** → pick `extension/`.
+
+- **Popup**: paste Malayalam and read the Tamil-script output live, or click *Convert this page*.
+- **Right-click a selection** → *Show selection in Tamil script*: the result shows in a small corner panel.
+- **Right-click the page** → *Convert this page to Tamil script*: text that loads later is converted too.
+
+It asks only for `activeTab`, `scripting` and `contextMenus`. It runs on a page only when
+you click the popup button or a menu item, so it needs no access to all sites.
+
+## CLI
+
+```sh
+npm link                            # once: puts `tamal` on PATH
+echo "എന്റെ പേര്" | tamal           # என்றெ பேரு
+tamal notes.txt > notes.tamil.txt
+```
+
+## How the conversion works
+
+Most letters map one to one, because the Malayalam and Tamil Unicode blocks share a layout.
+Tamil has fewer letters, so some information is lost:
+
+- **Voicing and aspiration**: ക ഖ ഗ ഘ all become க, and പ ഫ ബ ഭ all become ப (`ഭാരതം` → `பாரதம்`).
+- **ന** becomes ந at the start of a word and before த (`പന്ത്` → `பந்து`), and ன elsewhere (`എന്ന` → `என்ன`).
+- **Word-final ്** (the half-u) is written ு, the way it is pronounced (`അത്` → `அது`).
+- **ം** becomes the nasal that matches the next consonant (`സംഗീതം` → `ஸங்கீதம்`), and ம் otherwise.
+- **Chillus** become consonant + pulli (`അവൻ` → `அவன்`), including the older ZWJ spelling.
+- **ൃ** becomes ்ரு (`കൃഷ്ണൻ` → `க்ருஷ்ணன்`), and ശ്രീ becomes ஸ்ரீ.
+- **Malayalam digits** become 0–9.
+
+The converter is `extension/tamal.js`. The CLI and tests use the same file.
+
+## Development
+
+```sh
+make test     # or: npm test
+make zip      # runs the tests, then writes dist/tamal-<version>.zip for the Chrome Web Store
+```
+
+## Releasing
+
+CI (`.github/workflows/ci.yml`) runs the tests and builds the zip on every push and pull
+request. To release:
+
+1. Bump `version` in both `extension/manifest.json` and `package.json`. CI fails if they differ.
+2. Commit, then tag and push: `git tag v0.2.0 && git push origin main v0.2.0`.
+3. CI checks that the tag matches the manifest version, then publishes a GitHub Release
+   with `tamal-<version>.zip` attached. Upload that zip to the Chrome Web Store.
+
+## License
+
+MIT. See `LICENSE`.

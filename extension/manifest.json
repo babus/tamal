@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Tamal – Malayalam in Tamil script",
+  "short_name": "Tamal",
+  "version": "0.1.0",
+  "description": "Read Malayalam in Tamil letters. Convert pasted text, a selection or a whole page. Works offline; nothing leaves your browser.",
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Tamal",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "contextMenus"
+  ]
+}

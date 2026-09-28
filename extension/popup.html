@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style>
+  :root { --bg: #f7f6f2; --panel: #fff; --ink: #1d1c1a; --muted: #6b6860; --line: #e2dfd7; --accent: #b4482c; color-scheme: light dark; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #151514; --panel: #1f1f1d; --ink: #ecebe6; --muted: #9a978e; --line: #33322f; --accent: #e5825f; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; width: 460px; padding: 12px; background: var(--bg); color: var(--ink); font: 14px/1.5 system-ui, -apple-system, sans-serif; }
+  .bar { display: flex; gap: 6px; align-items: center; margin-bottom: 8px; }
+  button { font: inherit; font-size: 13px; padding: 5px 10px; border: 1px solid var(--line); border-radius: 7px; background: var(--panel); color: var(--ink); cursor: pointer; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  textarea { width: 100%; height: 150px; resize: vertical; padding: 10px; margin-bottom: 8px; font: 16px/1.6 system-ui, sans-serif; border: 1px solid var(--line); border-radius: 9px; background: var(--panel); color: var(--ink); }
+  #output { font-family: "Tamil Sangam MN", "Noto Sans Tamil", "Latha", system-ui, sans-serif; }
+  #status { color: var(--muted); font-size: 12px; margin-left: auto; }
+</style>
+</head>
+<body>
+  <div class="bar">
+    <button id="page" class="primary">Convert this page</button>
+    <span id="status"></span>
+  </div>
+  <textarea id="input" lang="ml" placeholder="…or paste Malayalam text here" autofocus></textarea>
+  <textarea id="output" lang="ta" placeholder="Tamil-script output" readonly></textarea>
+  <div class="bar">
+    <button id="copy">Copy output</button>
+  </div>
+  <script src="tamal.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
