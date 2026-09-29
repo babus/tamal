@@ -31,6 +31,12 @@ you click the popup button or a menu item, so it needs no access to all sites.
 |---|---|
 | ![The popup converts pasted Malayalam as you type](store/screenshot-1.png) | ![Right-click converts a whole page to Tamil script](store/screenshot-2.png) |
 
+## Web page
+
+`site/` is a one-page converter for phones and other browsers, published with GitHub Pages at
+https://babu.work/tamal/ by `.github/workflows/pages.yml` on every push to `main`.
+`make site` assembles it into `dist/site/` with the same `tamal.js` the extension uses.
+
 ## CLI
 
 ```sh

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Malayalam to Tamil Script Converter – Tamal</title>
+<meta name="description" content="Paste Malayalam and read it in Tamil letters. Free, works offline in your browser, nothing is sent anywhere. மலையாளத்தைத் தமிழ் எழுத்துகளில் படியுங்கள்.">
+<link rel="canonical" href="https://babu.work/tamal/">
+<link rel="icon" href="icon.png">
+<meta name="theme-color" content="#f7f3ec" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171614" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tamal – read Malayalam in Tamil letters">
+<meta property="og:description" content="Paste Malayalam and read it in Tamil script. Free, offline, private.">
+<meta property="og:url" content="https://babu.work/tamal/">
+<meta property="og:image" content="https://babu.work/tamal/og.png">
+<meta property="og:image:width" content="1400">
+<meta property="og:image:height" content="560">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Tamal",
+  "url": "https://babu.work/tamal/",
+  "description": "Converts Malayalam script to Tamil script, so Tamil readers can read Malayalam. Runs entirely in the browser.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "inLanguage": ["ml", "ta", "en"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+  "author": { "@type": "Person", "name": "Babu Somasundaram", "url": "https://babu.work/" }
+}
+</script>
+<style>
+  :root {
+    --bg: #f7f3ec; --panel: #fff; --ink: #1d1c1a; --muted: #6b6860; --line: #e6dfd2;
+    --accent: #b4482c; --accent-ink: #fff; --accent-soft: #f5e4dc; --ok: #3c7a4a;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #171614; --panel: #22211e; --ink: #ecebe6; --muted: #9a978e; --line: #34322e;
+      --accent: #e0785a; --accent-ink: #1d1c1a; --accent-soft: #3a2721; --ok: #7cc28b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 -apple-system, system-ui, "Segoe UI", sans-serif; }
+  a { color: var(--accent); }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  .ml { font-family: "Malayalam Sangam MN", "Noto Sans Malayalam", "Kartika", system-ui, sans-serif; }
+  .ta { font-family: "Tamil Sangam MN", "Noto Sans Tamil", "Latha", system-ui, sans-serif; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+
+  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 0; }
+  .brand { display: flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; font-weight: 700; font-size: 19px; }
+  .brand img { width: 34px; height: 34px; border-radius: 22%; }
+  header nav a { color: var(--muted); text-decoration: none; font-size: 14px; }
+  header nav a:hover { color: var(--ink); }
+
+  .hero { padding: clamp(12px, 4vw, 40px) 0 clamp(18px, 3vw, 28px); }
+  h1 { margin: 0 0 10px; font-size: clamp(32px, 6vw, 54px); line-height: 1.08; letter-spacing: -.025em; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .lede { margin: 0; max-width: 60ch; font-size: clamp(16px, 2.2vw, 19px); color: var(--muted); }
+  .lede .ta { color: var(--ink); }
+
+  .card { display: grid; grid-template-columns: 1fr 1fr; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 18px; box-shadow: 0 18px 50px rgba(60, 40, 20, .08); }
+  .pane { position: relative; display: flex; flex-direction: column; min-width: 0; padding: 14px 18px 18px; }
+  .pane + .pane { border-left: 1px solid var(--line); }
+  .head { display: flex; align-items: center; gap: 6px; min-height: 30px; margin-bottom: 6px; }
+  .label { margin-right: auto; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+  .chip { position: absolute; left: -15px; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; display: grid; place-items: center;
+    border-radius: 50%; background: var(--accent-soft); color: var(--accent); border: 2px solid var(--panel); font-weight: 700; }
+  textarea, #output { width: 100%; min-height: 260px; flex: 1; font-size: 19px; line-height: 1.75; }
+  textarea { display: block; resize: none; overflow: hidden; padding: 0; border: 0; outline: none; background: transparent; color: var(--ink); }
+  textarea::placeholder { color: var(--muted); opacity: .8; }
+  #output { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 20px; }
+  #output:empty::before { content: attr(data-empty); color: var(--muted); opacity: .8; font: 15px/1.6 -apple-system, system-ui, sans-serif; }
+
+  .ghost { display: inline-flex; align-items: center; gap: 5px; padding: 4px 11px; font-size: 13px; border-radius: 999px;
+    border: 1px solid var(--line); background: transparent; color: var(--muted); }
+  .ghost:hover { color: var(--ink); border-color: var(--muted); }
+  .ghost[hidden] { display: none; }
+  .ghost.done { color: var(--ok); border-color: currentColor; }
+  .solid { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+  .solid:hover { color: var(--accent-ink); filter: brightness(1.06); }
+  #status { min-height: 22px; margin: 10px 4px 0; font-size: 14px; color: var(--muted); }
+
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: clamp(28px, 5vw, 48px) 0; }
+  .features div { padding: 16px 18px; border: 1px solid var(--line); border-radius: 14px; }
+  .features b { display: block; margin-bottom: 4px; }
+  .features p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  section.more { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 4vw, 48px); padding: 8px 0 12px; }
+  h2 { margin: 0 0 10px; font-size: 21px; letter-spacing: -.01em; }
+  section.more p, section.more li { color: var(--muted); font-size: 15px; }
+  section.more ul { margin: 0; padding-left: 18px; }
+  .ex { color: var(--ink); white-space: nowrap; }
+
+  footer { margin-top: 36px; padding: 20px 0 32px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap;
+    justify-content: space-between; gap: 8px 20px; font-size: 14px; color: var(--muted); }
+  footer a { color: inherit; }
+
+  @media (max-width: 760px) {
+    .card, section.more, .features { grid-template-columns: 1fr; }
+    .pane + .pane { border-left: 0; border-top: 1px solid var(--line); }
+    .chip { left: 50%; top: -15px; transform: translateX(-50%) rotate(90deg); }
+    textarea, #output { min-height: 150px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="./"><img src="icon.png" alt="">Tamal</a>
+      <nav><a href="https://github.com/babus/tamal">Source on GitHub</a></nav>
+    </header>
+
+    <div class="hero">
+      <h1>Read Malayalam in <em>Tamil letters</em></h1>
+      <p class="lede">Paste Malayalam and read it in Tamil script as you type. The words stay Malayalam; only the letters change.
+        <span class="ta" lang="ta">மலையாளத்தைத் தமிழ் எழுத்துகளில் படியுங்கள்.</span></p>
+    </div>
+
+    <main class="card">
+      <div class="pane">
+        <div class="head">
+          <span class="label">Malayalam</span>
+          <button id="paste" class="ghost">Paste</button>
+          <button id="clear" class="ghost" hidden>Clear</button>
+        </div>
+        <textarea id="input" class="ml" lang="ml" placeholder="Paste or type Malayalam here…" autofocus></textarea>
+      </div>
+      <div class="pane">
+        <span class="chip" aria-hidden="true">→</span>
+        <div class="head">
+          <span class="label">Tamil script</span>
+          <button id="copy" class="ghost solid" hidden>Copy</button>
+        </div>
+        <div id="output" class="ta" lang="ta" aria-live="polite" data-empty="The Tamil-script version shows up here as you type."></div>
+      </div>
+    </main>
+    <div id="status" role="status"></div>
+
+    <div class="features">
+      <div><b>Private</b><p>It runs in your browser. What you paste never leaves your device.</p></div>
+      <div><b>Works offline</b><p>No server and no sign-up. Once the page has loaded, it needs no internet.</p></div>
+      <div><b>Free</b><p>No ads and no tracking. The code is open source under the MIT license.</p></div>
+    </div>
+
+    <section class="more">
+      <div>
+        <h2>Chrome extension</h2>
+        <p>Convert a whole Malayalam web page, or right-click any selection to see it in Tamil script, without copying anything.
+          Tamal for Chrome is on its way to the Chrome Web Store; until then you can
+          <a href="https://github.com/babus/tamal/releases/latest">install it from GitHub</a>.</p>
+      </div>
+      <div>
+        <h2>How it reads</h2>
+        <p>Tamal writes each Malayalam word the way a Tamil reader would say it, for example:</p>
+        <ul>
+          <li><span class="ex"><span class="ml" lang="ml">അത്</span> → <span class="ta" lang="ta">அது</span></span>: the half-u at the end of a word</li>
+          <li><span class="ex"><span class="ml" lang="ml">ഭാരതം</span> → <span class="ta" lang="ta">பாரதம்</span></span>: Tamil has one letter for ബ, ഭ and പ</li>
+          <li><span class="ex"><span class="ml" lang="ml">ടിക്കറ്റ്</span> → <span class="ta" lang="ta">டிக்கட்டு</span></span>: double letters in the usual Tamil spelling</li>
+        </ul>
+        <p>It changes the script, not the language: this is transliteration, not translation.</p>
+      </div>
+    </section>
+
+    <footer>
+      <span>Tamal · made by <a href="https://babu.work/">Babu Somasundaram</a></span>
+      <span><a href="https://github.com/babus/tamal">Source</a> · <a href="https://gist.github.com/babus/1100d37cd6fd2b9c5eca86edf1358f37">Privacy</a> · MIT license</span>
+    </footer>
+  </div>
+
+  <script src="tamal.js"></script>
+  <script>
+    (() => {
+      const $ = (id) => document.getElementById(id);
+      const input = $('input'), output = $('output'), status = $('status'), copy = $('copy'), clear = $('clear');
+
+      function update() {
+        output.textContent = Tamal.convert(input.value);
+        copy.hidden = clear.hidden = !input.value;
+        copy.textContent = 'Copy';
+        copy.classList.remove('done');
+        status.textContent = input.value && !/[ഀ-ൿ]/.test(input.value) ? 'No Malayalam text found' : '';
+        // Grow the box with its text (the CSS min-height still applies).
+        input.style.height = 'auto';
+        input.style.height = `${input.scrollHeight}px`;
+      }
+
+      input.addEventListener('input', update);
+      clear.addEventListener('click', () => { input.value = ''; update(); input.focus(); });
+      copy.addEventListener('click', async () => {
+        await navigator.clipboard.writeText(output.textContent);
+        copy.textContent = 'Copied ✓';
+        copy.classList.add('done');
+      });
+      // Some browsers (Firefox) don't let pages read the clipboard; hide the button there.
+      if (!navigator.clipboard?.readText) $('paste').hidden = true;
+      $('paste').addEventListener('click', async () => {
+        try { input.value = await navigator.clipboard.readText(); update(); }
+        catch { status.textContent = 'Paste was blocked. Long-press or use Ctrl+V / ⌘V in the Malayalam box.'; }
+      });
+    })();
+  </script>
+</body>
+</html>
