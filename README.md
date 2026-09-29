@@ -35,7 +35,7 @@ you click the popup button or a menu item, so it needs no access to all sites.
 
 ```sh
 npm link                            # once: puts `tamal` on PATH
-echo "എന്റെ പേര്" | tamal           # என்றெ பேரு
+echo "എന്റെ പേര്" | tamal           # என்டெ பேரு
 tamal notes.txt > notes.tamil.txt
 ```
 
@@ -49,7 +49,7 @@ Tamil has fewer letters, so some information is lost:
 - **ന** becomes ந at the start of a word and before த (`പന്ത്` → `பந்து`), and ன elsewhere (`എന്ന` → `என்ன`).
 - **Word-final ്** (the half-u) is written ு, the way it is pronounced (`അത്` → `அது`).
 - **ം** becomes the nasal that matches the next consonant (`സംഗീതം` → `ஸங்கீதம்`), and ம் otherwise.
-- **Double letters that Tamil doesn't use** get the usual Tamil spelling: ങ്ങ → ங்க (`ഇറങ്ങി` → `இறங்கி`), ഞ്ഞ → ஞ்ச (`കുഞ്ഞ്` → `குஞ்சு`), റ്റ → ட்ட (`ടിക്കറ്റ്` → `டிக்கட்டு`). And **ശ** is written ஷ (`ആശുപത്രി` → `ஆஷுபத்ரி`).
+- **Double letters that Tamil doesn't use** get the usual Tamil spelling: ങ്ങ → ங்க (`ഇറങ്ങി` → `இறங்கி`), ഞ്ഞ → ஞ்ச (`കുഞ്ഞ്` → `குஞ்சு`), റ്റ → ட்ட (`ടിക്കറ്റ്` → `டிக்கட்டு`), ന്റ → ன்ட (`എന്റെ` → `என்டெ`). And **ശ** is written ஷ (`ആശുപത്രി` → `ஆஷுபத்ரி`).
 - **The au sign ൗ**, written alone in modern spelling, becomes ௌ (`കൗതുകം` → `கௌதுகம்`).
 - **Chillus** become consonant + pulli (`അവൻ` → `அவன்`), including the older ZWJ spelling.
 - **ൃ** becomes ்ரு (`കൃഷ്ണൻ` → `க்ருஷ்ணன்`), and ശ്രീ becomes ஸ்ரீ.

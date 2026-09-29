@@ -49,7 +49,8 @@
     // Double letters Tamil readers would stumble on get the usual Tamil spelling:
     .replace(/ങ്ങ/g, 'ങ്ക') // ங்க, not ங்ங (ഇറങ്ങി → இறங்கி)
     .replace(/ഞ്ഞ/g, 'ഞ്ച') // ஞ்ச, not ஞ்ஞ (കുഞ്ഞ് → குஞ்சு)
-    .replace(/റ്റ/g, 'ട്ട'); // ட்ட, the "tt" sound, not ற்ற (ടിക്കറ്റ് → டிக்கட்டு)
+    .replace(/റ്റ/g, 'ട്ട') // ட்ட, the "tt" sound, not ற்ற (ടിക്കറ്റ് → டிக்கட்டு)
+    .replace(/(?:ന്|ൻ)റ/g, 'ന്ട'); // ன்ட, the "nt" sound, not ன்ற (എന്റെ → என்டெ); ൻറ is an older spelling
 
   function convert(input) {
     const s = normalize(input);
