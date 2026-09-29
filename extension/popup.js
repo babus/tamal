@@ -1,21 +1,40 @@
 (() => {
   const $ = (id) => document.getElementById(id);
   const input = $('input'), output = $('output'), status = $('status');
+  const copy = $('copy'), clear = $('clear'), page = $('page');
 
-  input.addEventListener('input', () => {
-    output.value = Tamal.convert(input.value);
-    status.textContent = input.value && !/[ഀ-ൿ]/.test(input.value) ? 'No Malayalam text found' : '';
+  const say = (text, ok = false) => { status.textContent = text; status.classList.toggle('ok', ok); };
+
+  function update() {
+    output.textContent = Tamal.convert(input.value);
+    copy.hidden = clear.hidden = !input.value;
+    copy.textContent = 'Copy';
+    copy.classList.remove('done');
+    say(input.value && !/[ഀ-ൿ]/.test(input.value) ? 'No Malayalam text found' : '');
+    // Grow the box with its text, up to the CSS max-height.
+    input.style.height = 'auto';
+    input.style.height = `${input.scrollHeight}px`;
+  }
+
+  input.addEventListener('input', update);
+  clear.addEventListener('click', () => { input.value = ''; update(); input.focus(); });
+  copy.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(output.textContent);
+    copy.textContent = 'Copied ✓';
+    copy.classList.add('done');
   });
-  $('copy').addEventListener('click', async () => { await navigator.clipboard.writeText(output.value); status.textContent = 'Copied'; });
 
-  $('page').addEventListener('click', async () => {
+  page.addEventListener('click', async () => {
+    page.disabled = true;
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     try {
       await chrome.scripting.executeScript({ target: { tabId: tab.id }, files: ['tamal.js', 'content.js'] });
       const { count } = await chrome.tabs.sendMessage(tab.id, { type: 'page' });
-      status.textContent = count ? `Converted ${count} text blocks` : 'No Malayalam text on this page';
+      if (count) say(`✓ Converted ${count} text block${count === 1 ? '' : 's'}. New text converts as it loads.`, true);
+      else say('No Malayalam text on this page');
     } catch {
-      status.textContent = "Can't run on this page";
+      say("Chrome doesn't let extensions run on this page");
     }
+    page.disabled = false;
   });
 })();

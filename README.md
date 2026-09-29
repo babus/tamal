@@ -44,10 +44,13 @@ tamal notes.txt > notes.tamil.txt
 Most letters map one to one, because the Malayalam and Tamil Unicode blocks share a layout.
 Tamil has fewer letters, so some information is lost:
 
-- **Voicing and aspiration**: ക ഖ ഗ ഘ all become க, and പ ഫ ബ ഭ all become ப (`ഭാരതം` → `பாரதம்`).
+- **Voicing and aspiration**: ക ഖ ഗ ഘ all become க, and പ ബ ഭ all become ப (`ഭാരതം` → `பாரதம்`).
+- **ഫ** becomes ஃப, the Tamil spelling of "f" (`ഫോൺ` → `ஃபோண்`).
 - **ന** becomes ந at the start of a word and before த (`പന്ത്` → `பந்து`), and ன elsewhere (`എന്ന` → `என்ன`).
 - **Word-final ്** (the half-u) is written ு, the way it is pronounced (`അത്` → `அது`).
 - **ം** becomes the nasal that matches the next consonant (`സംഗീതം` → `ஸங்கீதம்`), and ம் otherwise.
+- **Double letters that Tamil doesn't use** get the usual Tamil spelling: ങ്ങ → ங்க (`ഇറങ്ങി` → `இறங்கி`), ഞ്ഞ → ஞ்ச (`കുഞ്ഞ്` → `குஞ்சு`), റ്റ → ட்ட (`ടിക്കറ്റ്` → `டிக்கட்டு`). And **ശ** is written ஷ (`ആശുപത്രി` → `ஆஷுபத்ரி`).
+- **The au sign ൗ**, written alone in modern spelling, becomes ௌ (`കൗതുകം` → `கௌதுகம்`).
 - **Chillus** become consonant + pulli (`അവൻ` → `அவன்`), including the older ZWJ spelling.
 - **ൃ** becomes ்ரு (`കൃഷ്ണൻ` → `க்ருஷ்ணன்`), and ശ്രീ becomes ஸ்ரீ.
 - **Malayalam digits** become 0–9.

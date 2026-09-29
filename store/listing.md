@@ -54,7 +54,7 @@ PRIVATE AND OFFLINE
 
 HOW THE CONVERSION WORKS
 Malayalam has more letters than Tamil, so Tamal follows the way Tamil readers already pronounce words:
-• ക ഖ ഗ ഘ become க, and പ ഫ ബ ഭ become ப (ഭാരതം → பாரதம்)
+• ക ഖ ഗ ഘ become க, and പ ബ ഭ become ப (ഭാരതം → பாரதம்); ഫ becomes ஃப (ഫോൺ → ஃபோண்)
 • ന becomes ந at the start of a word and ன elsewhere (എന്ന → என்ன)
 • The short "u" at the end of words is written ு (അത് → அது)
 • Chillu letters become consonant + pulli (അവൻ → அவன்)
