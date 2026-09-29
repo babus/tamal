@@ -1,4 +1,10 @@
+<p align="center">
+  <img src="extension/icons/128.png" width="96" height="96" alt="Tamal icon: Malayalam മ and Tamil த">
+</p>
+
 # Tamal
+
+![Tamal: read Malayalam in Tamil letters](store/promo-marquee.png)
 
 Read Malayalam in Tamil letters. Tamal keeps the Malayalam words and only changes the
 script, for readers who know Tamil script but not Malayalam script:
@@ -20,6 +26,10 @@ mode → **Load unpacked** → pick `extension/`.
 
 It asks only for `activeTab`, `scripting` and `contextMenus`. It runs on a page only when
 you click the popup button or a menu item, so it needs no access to all sites.
+
+| Popup | Whole page |
+|---|---|
+| ![The popup converts pasted Malayalam as you type](store/screenshot-1.png) | ![Right-click converts a whole page to Tamil script](store/screenshot-2.png) |
 
 ## CLI
 
