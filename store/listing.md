@@ -10,6 +10,9 @@ Copy these into the developer dashboard. The name and summary come from the mani
 | Category | Tools (Productivity also fits) |
 | Language | English, plus a Tamil (தமிழ்) listing: add it under *Store listing → Language* |
 | Privacy policy URL | https://gist.github.com/babus/1100d37cd6fd2b9c5eca86edf1358f37 (source: `privacy.md`) |
+| Homepage URL | https://github.com/babus/tamal |
+| Support URL | https://github.com/babus/tamal/issues |
+| Store icon | `icon-128.png` (128×128: 96×96 artwork with 16px transparent padding) |
 | Screenshots | `screenshot-1.png`, `screenshot-2.png` (1280×800) |
 | Small promo tile | `promo-small.png` (440×280) |
 | Marquee promo tile | `promo-marquee.png` (1400×560) |
@@ -47,6 +50,7 @@ PRIVATE AND OFFLINE
 • Works without an internet connection. All conversion happens in your browser
 • No accounts, ads, analytics or tracking. Nothing you read or paste leaves your device
 • Runs on a page only when you click it. No "read all websites" permission
+• Open source (MIT). Read the code or report a problem: https://github.com/babus/tamal
 
 HOW THE CONVERSION WORKS
 Malayalam has more letters than Tamil, so Tamal follows the way Tamil readers already pronounce words:
@@ -81,6 +85,7 @@ Tamal மலையாள எழுத்தைத் தமிழ் எழு�
 தனியுரிமை
 • இணையம் தேவையில்லை. எல்லாமே உங்கள் browser-இலேயே நடக்கிறது
 • கணக்கு, விளம்பரம், கண்காணிப்பு எதுவும் இல்லை. நீங்கள் படிப்பதோ ஒட்டுவதோ வெளியே செல்வதில்லை
+• திறந்த மூல நிரல் (MIT): https://github.com/babus/tamal
 
 இது மொழிபெயர்ப்பு அல்ல; எழுத்துப்பெயர்ப்பு மட்டுமே.
 
