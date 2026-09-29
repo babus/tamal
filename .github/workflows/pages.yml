@@ -3,7 +3,8 @@ name: Pages
 
 on:
   push:
-    branches: [main]
+    # release-0.1.3 publishes the page before 0.1.3 merges; drop it from this list when merging.
+    branches: [main, release-0.1.3]
   workflow_dispatch:
 
 permissions:
