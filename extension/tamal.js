@@ -43,14 +43,18 @@
   const normalize = (s) => s
     .replace(/([ണനരലളക])്‍/g, (_, c) => CHILLU[c])
     .replace(/[‌‍]/g, '')
+    // A chillu already ends the sound, so a virama after one is redundant; Unicode 6+ and
+    // most phone keyboards write ന്റ as ൻ്റ (തൻ്റെ = തന്റെ)
+    .replace(/([ൺൻർൽൾൿ])്/g, (_, c) => Object.keys(CHILLU).find((k) => CHILLU[k] === c) + '്')
     .replace(/ു്/g, 'ു') // old spelling of the half-u: അതു് = അത്
     .replace(/\u0D46\u0D57/g, '\u0D4C') // au typed as two parts (െ + ൗ) → ൌ
     .replace(/ശ്രീ/g, 'സ്രീ') // Tamil writes Sri as ஸ்ரீ, not ஷ்ரீ
     // Double letters Tamil readers would stumble on get the usual Tamil spelling:
     .replace(/ങ്ങ/g, 'ങ്ക') // ங்க, not ங்ங (ഇറങ്ങി → இறங்கி)
     .replace(/ഞ്ഞ/g, 'ഞ്ച') // ஞ்ச, not ஞ்ஞ (കുഞ്ഞ് → குஞ்சு)
-    .replace(/റ്റ/g, 'ട്ട') // ட்ட, the "tt" sound, not ற்ற (ടിക്കറ്റ് → டிக்கட்டு)
-    .replace(/(?:ന്|ൻ)റ/g, 'ന്ട'); // ன்ட, the "nt" sound, not ன்ற (എന്റെ → என்டெ); ൻറ is an older spelling
+    // ன்ட, the "nt" sound, not ன்ற (എന്റെ → என்டெ); ൻറ is an older spelling and ൻറ്റ a common informal one
+    .replace(/(?:ന്|ൻ)റ(?:്റ)?/g, 'ന്ട')
+    .replace(/റ്റ/g, 'ട്ട'); // ட்ட, the "tt" sound, not ற்ற (ടിക്കറ്റ് → டிக்கட்டு)
 
   function convert(input) {
     const s = normalize(input);
