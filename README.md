@@ -49,6 +49,26 @@ echo "എന്റെ പേര്" | tamal           # என்டெ பே�
 tamal notes.txt > notes.tamil.txt
 ```
 
+## PDFs
+
+```sh
+npm install && make tessdata        # once: the OCR engine and its Malayalam model
+tamal pdf book.pdf                  # → book.tamil.pdf next to it
+tamal pdf books/ out/               # every PDF in a folder
+tamal pdf book.pdf --pages 1-10     # only part of a book
+```
+
+The output is a plain reading copy: the text re-typeset in Tamil letters, with each source
+page's number in the margin. The original layout and pictures are not kept.
+
+Text is read with `pdftotext`. Scanned pages, and pages whose text is scrambled inside the
+PDF (common in Word exports with the Kartika font), are read from the page image with
+Tesseract OCR instead, so expect a few misread words on those. `--ocr off` skips OCR and
+`--ocr force` uses it for every page.
+
+Needs [poppler](https://poppler.freedesktop.org/) (`brew install poppler`) and Chrome,
+Chromium or Brave, which prints the PDF.
+
 ## How the conversion works
 
 Most letters map one to one, because the Malayalam and Tamil Unicode blocks share a layout.

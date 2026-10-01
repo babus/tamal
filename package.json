@@ -9,5 +9,8 @@
   },
   "scripts": {
     "test": "node test.js"
+  },
+  "dependencies": {
+    "tesseract.js": "^6.0.1"
   }
 }
