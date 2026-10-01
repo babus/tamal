@@ -26,5 +26,8 @@
     "activeTab",
     "scripting",
     "contextMenus"
+  ],
+  "optional_host_permissions": [
+    "*://*/*"
   ]
 }

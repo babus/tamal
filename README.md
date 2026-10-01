@@ -23,9 +23,13 @@ mode → **Load unpacked** → pick `extension/`.
 - **Popup**: paste Malayalam and read the Tamil-script output live, or click *Convert this page*.
 - **Right-click a selection** → *Show selection in Tamil script*: the result shows in a small corner panel.
 - **Right-click the page** → *Convert this page to Tamil script*: text that loads later is converted too.
+- **Always convert on a site**: tick *Always convert on <site>* in the popup, and that site converts on
+  every load and in every new tab. Untick it, or remove the site in Chrome's extension settings, to stop.
 
 It asks only for `activeTab`, `scripting` and `contextMenus`. It runs on a page only when
-you click the popup button or a menu item, so it needs no access to all sites.
+you click the popup button or a menu item, so it needs no access to all sites. *Always convert*
+asks Chrome for access to that one site when you tick it (an optional permission, so installing
+shows no warning).
 
 | Popup | Whole page |
 |---|---|

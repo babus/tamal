@@ -54,6 +54,11 @@
   .primary:hover { filter: brightness(1.06); }
   .primary:disabled { opacity: .7; cursor: default; }
 
+  .auto { display: flex; align-items: center; gap: 8px; margin-top: 10px; padding: 8px 12px; border: 1px solid var(--line);
+    border-radius: 11px; background: var(--panel); font-size: 13px; cursor: pointer; }
+  .auto[hidden] { display: none; }
+  .auto input { margin: 0; accent-color: var(--accent); }
+  .auto b { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   #status { min-height: 18px; margin: 8px 2px 0; font-size: 12px; color: var(--muted); text-align: center; }
   #status.ok { color: var(--ok); }
   footer { display: flex; justify-content: space-between; gap: 8px; margin-top: 6px; padding: 8px 2px 0;
@@ -85,6 +90,9 @@
   </div>
 
   <button id="page" class="primary">Convert this page</button>
+  <label id="auto-row" class="auto" hidden>
+    <input type="checkbox" id="auto"><span>Always convert on</span><b id="auto-host"></b>
+  </label>
   <div id="status" role="status"></div>
 
   <footer>
