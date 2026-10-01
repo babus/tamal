@@ -2,7 +2,7 @@
 // Plain JS with no dependencies, used by the CLI and tests (require) and the extension (window.Tamal).
 //
 // Tamil has one letter per stop series, so voicing and aspiration are lost:
-// ക ഖ ഗ ഘ → க, പ ഫ ബ ഭ → ப, and so on. Tamil readers voice stops by position anyway.
+// ക ഖ ഗ ഘ → க, പ ബ ഭ → ப, and so on. Tamil readers voice stops by position anyway.
 (() => {
   const ML = 0x0d00;
   const TA = 0x0b80;
@@ -13,10 +13,16 @@
     'ഛ': 'ச', 'ഝ': 'ஜ',
     'ഠ': 'ட', 'ഡ': 'ட', 'ഢ': 'ட',
     'ഥ': 'த', 'ദ': 'த', 'ധ': 'த',
-    'ഫ': 'ப', 'ബ': 'ப', 'ഭ': 'ப',
+    'ബ': 'ப', 'ഭ': 'ப',
+    // ഫ is mostly "f" in everyday text (ഫോൺ, ഫുട്ബോൾ); Tamil writes f as ஃப.
+    'ഫ': 'ஃப',
     'ഺ': 'ற', 'ഋ': 'ரு', 'ൠ': 'ரூ', 'ഌ': 'லு', 'ൡ': 'லூ',
     'ൃ': '்ரு', 'ൄ': '்ரூ', 'ൢ': '்லு', 'ൣ': '்லூ',
-    'ഃ': 'ஃ', 'ഽ': '', 'ൗ': 'ௗ',
+    'ഃ': 'ஃ', 'ഽ': '',
+    // Modern Malayalam writes the au sign as ൗ alone (കൗതുകം); Tamil needs the full ௌ.
+    'ൗ': 'ௌ',
+    // Tamil has ஶ for ശ, but few readers know it; ஷ gives the same "sh" sound (ആശുപത്രി → ஆஷுபத்ரி).
+    'ശ': 'ஷ',
     // Chillus (consonant with no vowel) and the old dot reph.
     'ൺ': 'ண்', 'ൻ': 'ன்', 'ർ': 'ர்', 'ൽ': 'ல்', 'ൾ': 'ள்', 'ൿ': 'க்', 'ൔ': 'ம்', 'ൕ': 'ய்', 'ൖ': 'ழ்', 'ൎ': 'ர்',
   };
@@ -37,8 +43,18 @@
   const normalize = (s) => s
     .replace(/([ണനരലളക])്‍/g, (_, c) => CHILLU[c])
     .replace(/[‌‍]/g, '')
+    // A chillu already ends the sound, so a virama after one is redundant; Unicode 6+ and
+    // most phone keyboards write ന്റ as ൻ്റ (തൻ്റെ = തന്റെ)
+    .replace(/([ൺൻർൽൾൿ])്/g, (_, c) => Object.keys(CHILLU).find((k) => CHILLU[k] === c) + '്')
     .replace(/ു്/g, 'ു') // old spelling of the half-u: അതു് = അത്
-    .replace(/ശ്രീ/g, 'സ്രീ'); // Tamil writes Sri as ஸ்ரீ, not ஶ்ரீ
+    .replace(/\u0D46\u0D57/g, '\u0D4C') // au typed as two parts (െ + ൗ) → ൌ
+    .replace(/ശ്രീ/g, 'സ്രീ') // Tamil writes Sri as ஸ்ரீ, not ஷ்ரீ
+    // Double letters Tamil readers would stumble on get the usual Tamil spelling:
+    .replace(/ങ്ങ/g, 'ങ്ക') // ங்க, not ங்ங (ഇറങ്ങി → இறங்கி)
+    .replace(/ഞ്ഞ/g, 'ഞ്ച') // ஞ்ச, not ஞ்ஞ (കുഞ്ഞ് → குஞ்சு)
+    // ன்ட, the "nt" sound, not ன்ற (എന്റെ → என்டெ); ൻറ is an older spelling and ൻറ്റ a common informal one
+    .replace(/(?:ന്|ൻ)റ(?:്റ)?/g, 'ന്ട')
+    .replace(/റ്റ/g, 'ട്ട'); // ட்ட, the "tt" sound, not ற்ற (ടിക്കറ്റ് → டிக்கட்டு)
 
   function convert(input) {
     const s = normalize(input);

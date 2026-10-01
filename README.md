@@ -23,31 +23,64 @@ mode → **Load unpacked** → pick `extension/`.
 - **Popup**: paste Malayalam and read the Tamil-script output live, or click *Convert this page*.
 - **Right-click a selection** → *Show selection in Tamil script*: the result shows in a small corner panel.
 - **Right-click the page** → *Convert this page to Tamil script*: text that loads later is converted too.
+- **Always convert on a site**: tick *Always convert on <site>* in the popup, and that site converts on
+  every load and in every new tab. Untick it, or remove the site in Chrome's extension settings, to stop.
 
 It asks only for `activeTab`, `scripting` and `contextMenus`. It runs on a page only when
-you click the popup button or a menu item, so it needs no access to all sites.
+you click the popup button or a menu item, so it needs no access to all sites. *Always convert*
+asks Chrome for access to that one site when you tick it (an optional permission, so installing
+shows no warning).
 
 | Popup | Whole page |
 |---|---|
 | ![The popup converts pasted Malayalam as you type](store/screenshot-1.png) | ![Right-click converts a whole page to Tamil script](store/screenshot-2.png) |
 
+## Web page
+
+`site/` is a one-page converter for phones and other browsers, published with GitHub Pages at
+https://babu.work/tamal/ by `.github/workflows/pages.yml` on every push to `main`.
+`make site` assembles it into `dist/site/` with the same `tamal.js` the extension uses.
+
 ## CLI
 
 ```sh
 npm link                            # once: puts `tamal` on PATH
-echo "എന്റെ പേര്" | tamal           # என்றெ பேரு
+echo "എന്റെ പേര്" | tamal           # என்டெ பேரு
 tamal notes.txt > notes.tamil.txt
 ```
+
+## PDFs
+
+```sh
+npm install && make tessdata        # once: the OCR engine and its Malayalam model
+tamal pdf book.pdf                  # → book.tamil.pdf next to it
+tamal pdf books/ out/               # every PDF in a folder
+tamal pdf book.pdf --pages 1-10     # only part of a book
+```
+
+The output is a plain reading copy: the text re-typeset in Tamil letters, with each source
+page's number in the margin. The original layout and pictures are not kept.
+
+Text is read with `pdftotext`. Scanned pages, and pages whose text is scrambled inside the
+PDF (common in Word exports with the Kartika font), are read from the page image with
+Tesseract OCR instead, so expect a few misread words on those. `--ocr off` skips OCR and
+`--ocr force` uses it for every page.
+
+Needs [poppler](https://poppler.freedesktop.org/) (`brew install poppler`) and Chrome,
+Chromium or Brave, which prints the PDF.
 
 ## How the conversion works
 
 Most letters map one to one, because the Malayalam and Tamil Unicode blocks share a layout.
 Tamil has fewer letters, so some information is lost:
 
-- **Voicing and aspiration**: ക ഖ ഗ ഘ all become க, and പ ഫ ബ ഭ all become ப (`ഭാരതം` → `பாரதம்`).
+- **Voicing and aspiration**: ക ഖ ഗ ഘ all become க, and പ ബ ഭ all become ப (`ഭാരതം` → `பாரதம்`).
+- **ഫ** becomes ஃப, the Tamil spelling of "f" (`ഫോൺ` → `ஃபோண்`).
 - **ന** becomes ந at the start of a word and before த (`പന്ത്` → `பந்து`), and ன elsewhere (`എന്ന` → `என்ன`).
 - **Word-final ്** (the half-u) is written ு, the way it is pronounced (`അത്` → `அது`).
 - **ം** becomes the nasal that matches the next consonant (`സംഗീതം` → `ஸங்கீதம்`), and ம் otherwise.
+- **Double letters that Tamil doesn't use** get the usual Tamil spelling: ങ്ങ → ங்க (`ഇറങ്ങി` → `இறங்கி`), ഞ്ഞ → ஞ்ச (`കുഞ്ഞ്` → `குஞ்சு`), റ്റ → ட்ட (`ടിക്കറ്റ്` → `டிக்கட்டு`), ന്റ → ன்ட (`എന്റെ` → `என்டெ`, also when spelled ൻറ or ൻറ്റ). And **ശ** is written ஷ (`ആശുപത്രി` → `ஆஷுபத்ரி`).
+- **The au sign ൗ**, written alone in modern spelling, becomes ௌ (`കൗതുകം` → `கௌதுகம்`).
 - **Chillus** become consonant + pulli (`അവൻ` → `அவன்`), including the older ZWJ spelling.
 - **ൃ** becomes ்ரு (`കൃഷ്ണൻ` → `க்ருஷ்ணன்`), and ശ്രീ becomes ஸ்ரீ.
 - **Malayalam digits** become 0–9.

@@ -1,6 +1,6 @@
 {
   "name": "tamal",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Malayalam in Tamil script: convert Malayalam text to Tamil letters, offline",
   "private": true,
   "license": "MIT",
@@ -9,5 +9,8 @@
   },
   "scripts": {
     "test": "node test.js"
+  },
+  "dependencies": {
+    "tesseract.js": "^6.0.1"
   }
 }

@@ -1,6 +1,6 @@
 VERSION := $(shell node -p "require('./extension/manifest.json').version")
 
-.PHONY: test zip store clean
+.PHONY: test zip store site tessdata clean
 
 test:
 	node test.js
@@ -15,6 +15,20 @@ zip: test
 # Chrome Web Store screenshots and promo tiles: store/src/*.html → store/*.png
 store:
 	node store/render.js
+
+# Web page for GitHub Pages (babu.work/tamal/): site/ plus the converter, icon and link-preview image.
+site:
+	rm -rf dist/site && mkdir -p dist/site
+	cp site/* dist/site/
+	cp extension/tamal.js dist/site/
+	cp extension/icons/128.png dist/site/icon.png
+	cp store/promo-marquee.png dist/site/og.png
+	@echo "dist/site"
+
+# OCR models for `tamal pdf` (Malayalam, plus English for stray Latin text): about 9 MB, not committed.
+tessdata:
+	@mkdir -p tessdata
+	cd tessdata && for l in mal eng; do [ -f $$l.traineddata ] || curl -fLO https://github.com/tesseract-ocr/tessdata_fast/raw/main/$$l.traineddata; done
 
 clean:
 	rm -rf dist

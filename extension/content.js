@@ -64,6 +64,8 @@
     document.documentElement.appendChild(host);
   }
 
+  window.__tamalConvertPage = convertPage; // auto.js calls this on sites set to convert automatically
+
   chrome.runtime.onMessage.addListener((msg, _sender, reply) => {
     if (msg.type === 'page') reply({ count: convertPage() });
     if (msg.type === 'selection') { showSelection(msg.text); reply({}); }

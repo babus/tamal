@@ -17,7 +17,7 @@ const CHROME = [
 // Headless Chrome can linger after writing the file, so stop it once it reports the write.
 function screenshot(src, out, size) {
   const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'tamal-'));
-  const args = ['--headless', '--disable-gpu', '--no-first-run', '--no-default-browser-check', '--hide-scrollbars',
+  const args = ['--headless', '--disable-gpu', '--no-first-run', '--no-default-browser-check', '--hide-scrollbars', '--blink-settings=preferredColorScheme=1',
     '--force-device-scale-factor=1', '--allow-file-access-from-files', `--user-data-dir=${profile}`,
     `--window-size=${size.replace('x', ',')}`, '--virtual-time-budget=2000', `--screenshot=${out}`, `file://${src}`];
   return new Promise((resolve, reject) => {
